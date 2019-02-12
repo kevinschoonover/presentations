@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="form-group">
+      <h1>To-Do <small>List</small></h1>
+      <form class="form" method="post">
+        <div class="form-row align-items-center">
+          <div class="col-sm-9">
+            <label class="sr-only" for="inlineFormInputName">Task</label>
+            <input name="task" type="text" class="form-control" id="inlineFormInputName" placeholder="Task">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div></div>
+    <div id="todo" class="container">
+      {% for todo in todos%}
+      <div class="row">
+        <div class="text-center" class="col">
+          {{ todo }}
+        </div>
+        <div class="col">
+          <form class="close" action="/todos/{{ loop.index0 }}/" method="get">
+            <button type="submit" class="btn btn-outline-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
