@@ -22,7 +22,7 @@
 		<link rel="stylesheet" href="../../lib/css/theme/black.css" id="theme">
 
 		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="../../lib/css/zenburn.css">
+		<link rel="stylesheet" href="../../lib/lib/css/zenburn.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -136,7 +136,7 @@
           <section>
             <h2>Demo 5</h2>
             <p>Obligatory 'Hello, World'!</p>
-            <pre><code class="hljs" data-trim contenteditable>
+            <pre><code class="hljs" data-trim>
 $ cd demo5
 $ pip install Flask // or use pipenv
 $ FLASK_APP=hello.py flask run
@@ -184,6 +184,24 @@ $ FLASK_APP=hello.py flask run
           <section>
             <h2>Demo 6</h2>
             <p>HTTP Methods</p>
+            <pre><code class="hljs" data-trim>
+from flask import Flask, request
+app = Flask(__name__)
+
+
+@app.route("/", methods=['GET', 'POST', 'PATCH', 'DELETE'])
+def hello():
+    if request.method == 'GET':
+        return 'GET Request'
+    elif request.method == 'POST':
+        return 'POST Request'
+    elif request.method == 'PATCH':
+        return 'PATCH Request'
+    elif request.method == 'DELETE':
+        return 'DELETE Request'
+    else:
+        return 'Request'
+            </code></pre>
           </section>
           <section style="text-align: left;">
             <h2>REST Clients</h2>
@@ -206,10 +224,50 @@ $ FLASK_APP=hello.py flask run
           <section>
             <h2>Demo 7</h2>
             <p>Standard Routes</p>
+            <pre><code class="hljs" data-trim>
+from flask import Flask, request
+app = Flask(__name__)
+
+
+@app.route("/")
+def index():
+    return "You've found the index page."
+
+
+@app.route("/secret/")
+def hidden():
+    return (
+        "Welcome to Equifax's Management Page.<br />Your SSN is 123-45-6789."
+    )
+            </code></pre>
           </section>
           <section>
             <h2>Demo 8</h2>
             <p>Variable Rules</p>
+            <pre><code class="hljs" data-trim>
+from flask import Flask, request
+app = Flask(__name__)
+
+
+@app.route("/")
+def index():
+    return "/users/&lt;br /&gt;/posts/&lt;br /&gt;/folders/"
+
+
+@app.route("/users/&lt;username&gt;")
+def user(username):
+    return "User {}".format(username)
+
+
+@app.route("/posts/&lt;int:id&gt;/")
+def post(id):
+    return "Post #{}".format(id)
+
+
+@app.route("/folders/&lt;path:subpath&gt;/")
+def folder(subpath):
+    return "Folder is {}".format(subpath)
+            </code></pre>
           </section>
         </section>
 
@@ -226,6 +284,16 @@ $ FLASK_APP=hello.py flask run
           <section>
             <h2>Demo 9</h2>
             <p>Templates</p>
+            <pre><code class="hljs" data-trim>
+from flask import Flask, request, render_template
+app = Flask(__name__)
+
+
+@app.route('/hello/')
+@app.route('/hello/&lt;name&gt;/')
+def hello(name=None):
+    return render_template('hello.html', name=name)
+            </pre></code>
           </section>
         </section>
 
